@@ -17,70 +17,87 @@ jobs:
       - uses: actions/checkout@v6
 
       - name: Stats (dark)
+        continue-on-error: true
         uses: stats-organization/github-readme-stats-action@v2
         with:
           card: stats
-          options: username=AgentTarik&show_icons=true&hide_border=true&include_all_commits=true&theme=github_dark
+          options: username=AgentTarik&show_icons=true&hide_border=true&include_all_commits=true&hide_rank=true&theme=github_dark
           path: profile/stats-dark.svg
           token: ${{ secrets.GITHUB_TOKEN }}
+          fail_on_error: true
 
       - name: Stats (light)
+        continue-on-error: true
         uses: stats-organization/github-readme-stats-action@v2
         with:
           card: stats
-          options: username=AgentTarik&show_icons=true&hide_border=true&include_all_commits=true&theme=default
+          options: username=AgentTarik&show_icons=true&hide_border=true&include_all_commits=true&hide_rank=true&theme=default
           path: profile/stats-light.svg
           token: ${{ secrets.GITHUB_TOKEN }}
+          fail_on_error: true
 
       - name: Top languages (dark)
+        continue-on-error: true
         uses: stats-organization/github-readme-stats-action@v2
         with:
           card: top-langs
           options: username=AgentTarik&layout=compact&langs_count=6&hide_border=true&theme=github_dark&hide=jupyter notebook,html,css
           path: profile/top-langs-dark.svg
           token: ${{ secrets.GITHUB_TOKEN }}
+          fail_on_error: true
 
       - name: Top languages (light)
+        continue-on-error: true
         uses: stats-organization/github-readme-stats-action@v2
         with:
           card: top-langs
           options: username=AgentTarik&layout=compact&langs_count=6&hide_border=true&theme=default&hide=jupyter notebook,html,css
           path: profile/top-langs-light.svg
           token: ${{ secrets.GITHUB_TOKEN }}
+          fail_on_error: true
 
       - name: Pin tariklabs/mapper
+        continue-on-error: true
         uses: stats-organization/github-readme-stats-action@v2
         with:
           card: pin
           options: username=tariklabs&repo=mapper&hide_border=true&theme=github_dark
           path: profile/pin-mapper.svg
           token: ${{ secrets.GITHUB_TOKEN }}
+          fail_on_error: true
 
       - name: Pin FINANCE-API
+        continue-on-error: true
         uses: stats-organization/github-readme-stats-action@v2
         with:
           card: pin
           options: username=AgentTarik&repo=FINANCE-API&hide_border=true&theme=github_dark
           path: profile/pin-finance-api.svg
           token: ${{ secrets.GITHUB_TOKEN }}
+          fail_on_error: true
 
       - name: Pin Talk-Trail
+        continue-on-error: true
         uses: stats-organization/github-readme-stats-action@v2
         with:
           card: pin
           options: username=AgentTarik&repo=Talk-Trail&hide_border=true&theme=github_dark
           path: profile/pin-talk-trail.svg
           token: ${{ secrets.GITHUB_TOKEN }}
+          fail_on_error: true
 
       - name: Pin tariklabs-mapper-demo
+        continue-on-error: true
         uses: stats-organization/github-readme-stats-action@v2
         with:
           card: pin
           options: username=AgentTarik&repo=tariklabs-mapper-demo&hide_border=true&theme=github_dark
           path: profile/pin-mapper-demo.svg
           token: ${{ secrets.GITHUB_TOKEN }}
+          fail_on_error: true
 
       - name: Tech stack icons
+        if: always()
         run: |
           mkdir -p profile
           curl -fsSL "https://skillicons.dev/icons?i=go,py,c,cs,java,ts,kafka,dynamodb,postgres,redis,aws,gcp,docker,kubernetes,terraform,grafana,prometheus,django,react,githubactions&perline=10" -o /tmp/skills.svg \
@@ -88,6 +105,7 @@ jobs:
             || echo "skillicons unavailable, keeping the old file"
 
       - name: Commit cards
+        if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
