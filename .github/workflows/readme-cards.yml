@@ -1,0 +1,96 @@
+name: Update README cards
+
+on:
+  schedule:
+    - cron: "0 6 * * *" # daily
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/readme-cards.yml
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Stats (dark)
+        uses: stats-organization/github-readme-stats-action@v2
+        with:
+          card: stats
+          options: username=AgentTarik&show_icons=true&hide_border=true&include_all_commits=true&theme=github_dark
+          path: profile/stats-dark.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Stats (light)
+        uses: stats-organization/github-readme-stats-action@v2
+        with:
+          card: stats
+          options: username=AgentTarik&show_icons=true&hide_border=true&include_all_commits=true&theme=default
+          path: profile/stats-light.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Top languages (dark)
+        uses: stats-organization/github-readme-stats-action@v2
+        with:
+          card: top-langs
+          options: username=AgentTarik&layout=compact&langs_count=6&hide_border=true&theme=github_dark&hide=jupyter notebook,html,css
+          path: profile/top-langs-dark.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Top languages (light)
+        uses: stats-organization/github-readme-stats-action@v2
+        with:
+          card: top-langs
+          options: username=AgentTarik&layout=compact&langs_count=6&hide_border=true&theme=default&hide=jupyter notebook,html,css
+          path: profile/top-langs-light.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pin tariklabs/mapper
+        uses: stats-organization/github-readme-stats-action@v2
+        with:
+          card: pin
+          options: username=tariklabs&repo=mapper&hide_border=true&theme=github_dark
+          path: profile/pin-mapper.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pin FINANCE-API
+        uses: stats-organization/github-readme-stats-action@v2
+        with:
+          card: pin
+          options: username=AgentTarik&repo=FINANCE-API&hide_border=true&theme=github_dark
+          path: profile/pin-finance-api.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pin Talk-Trail
+        uses: stats-organization/github-readme-stats-action@v2
+        with:
+          card: pin
+          options: username=AgentTarik&repo=Talk-Trail&hide_border=true&theme=github_dark
+          path: profile/pin-talk-trail.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pin tariklabs-mapper-demo
+        uses: stats-organization/github-readme-stats-action@v2
+        with:
+          card: pin
+          options: username=AgentTarik&repo=tariklabs-mapper-demo&hide_border=true&theme=github_dark
+          path: profile/pin-mapper-demo.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Tech stack icons
+        run: |
+          mkdir -p profile
+          curl -fsSL "https://skillicons.dev/icons?i=go,py,c,cs,java,ts,kafka,dynamodb,postgres,redis,aws,gcp,docker,kubernetes,terraform,grafana,prometheus,django,react,githubactions&perline=10" -o /tmp/skills.svg \
+            && mv /tmp/skills.svg profile/skills.svg \
+            || echo "skillicons unavailable, keeping the old file"
+
+      - name: Commit cards
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add profile/*.svg
+          git commit -m "Update README cards" || exit 0
+          git push
