@@ -47,4 +47,4 @@
   </picture>
 </p>
 
-<sub><p align="center">Cards are generated daily by a GitHub Action in this repo, so they don't depend on an external server.</p></sub>
+<p align="center"><sub>Most of my commits and PRs are in private repositories, so they don't show up in these numbers.</sub></p>
